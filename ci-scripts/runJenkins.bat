@@ -1,0 +1,1 @@
+"C:\Program Files\Java\jdk-11.0.14\bin\java" -jar "C:\Program Files\Jenkins\jenkins.war"
