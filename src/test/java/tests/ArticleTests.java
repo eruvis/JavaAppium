@@ -29,8 +29,8 @@ public class ArticleTests extends CoreTestCase {
     public void testSwipeArticle() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("Kotlin");
-        SearchPageObject.clickByArticleWithSubstring("Kotlin-class destroyer");
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();

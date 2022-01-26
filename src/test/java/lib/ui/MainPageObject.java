@@ -8,6 +8,7 @@ import lib.Platform;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -99,6 +100,28 @@ public class MainPageObject {
         swipeUp(200);
     }
 
+    public void scrollWebPageUp() {
+        if (Platform.getInstance().isMW()) {
+            JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+            javascriptExecutor.executeScript("window.scrollBy(0, 250)");
+        } else {
+            System.out.println("Method scrollWebPageUp() does nothing for platform " + Platform.getInstance().getPlatformVar());
+        }
+    }
+
+    public void scrollWebPageTitleElementNotVisible(String locator, String errorMessage, int maxSwipes) {
+        int already_swipes = 0;
+        WebElement element = waitForElementPresent(locator, errorMessage);
+        while (!this.isElementLocatedOnTheScreen(locator)) {
+            scrollWebPageUp();
+            ++already_swipes;
+            if (already_swipes > maxSwipes) {
+                Assert.assertTrue(errorMessage, element.isDisplayed());
+            }
+
+        }
+    }
+
     public void swipeUpToFindElement(String locator, String errorMessage, int maxSwipes) {
         By by = this.getLocatorByString(locator);
 
@@ -134,6 +157,11 @@ public class MainPageObject {
 
     public boolean isElementLocatedOnTheScreen(String locator) {
         int elementLocationByY = this.waitForElementPresent(locator, "Cannot find element by locator", 1).getLocation().getY();
+        if (Platform.getInstance().isMW()) {
+            JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+            Object javascriptResult = javascriptExecutor.executeScript("return window.pageYOffset");
+            elementLocationByY-= Integer.parseInt(javascriptResult.toString());
+        }
         int screenSizeByY = driver.manage().window().getSize().getHeight();
         return elementLocationByY < screenSizeByY;
     }
@@ -209,7 +237,8 @@ public class MainPageObject {
         }
     }
 
-    public String waitForElementAndGetAttribute(String locator, String attribute, String errorMessage, long timeoutInSeconds) {
+    public String waitForElementAndGetAttribute(String locator, String attribute, String errorMessage,
+                                                long timeoutInSeconds) {
         WebElement element = waitForElementPresent(locator, errorMessage, timeoutInSeconds);
         return element.getAttribute(attribute);
     }
