@@ -36,7 +36,7 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForCancelButtonToAppear();
         SearchPageObject.clickCancelSearch();
-        SearchPageObject.clickCancelSearch();
+        //SearchPageObject.clickCancelSearch();
         SearchPageObject.waitForCancelButtonToDisappear();
     }
 
