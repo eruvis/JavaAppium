@@ -1,6 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
@@ -36,7 +37,9 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForCancelButtonToAppear();
         SearchPageObject.clickCancelSearch();
-        //SearchPageObject.clickCancelSearch();
+        if (!Platform.getInstance().isMW()) {
+            SearchPageObject.clickCancelSearch();
+        }
         SearchPageObject.waitForCancelButtonToDisappear();
     }
 
