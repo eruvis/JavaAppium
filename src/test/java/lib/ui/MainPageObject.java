@@ -160,7 +160,7 @@ public class MainPageObject {
         if (Platform.getInstance().isMW()) {
             JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
             Object javascriptResult = javascriptExecutor.executeScript("return window.pageYOffset");
-            elementLocationByY-= Integer.parseInt(javascriptResult.toString());
+            elementLocationByY -= Integer.parseInt(javascriptResult.toString());
         }
         int screenSizeByY = driver.manage().window().getSize().getHeight();
         return elementLocationByY < screenSizeByY;
@@ -220,6 +220,27 @@ public class MainPageObject {
 
         List elements = driver.findElements(by);
         return elements.size();
+    }
+
+    public boolean isElementPresent(String locator) {
+        return getAmountOfElements(locator) > 0;
+    }
+
+    public void tryClickElementWithFewAttempts(String locator, String errorMessage, int amountOfAttempts) {
+        int currentAttempts = 0;
+        boolean needMoreAttempts = true;
+
+        while (needMoreAttempts) {
+            try {
+                this.waitForElementAndClick(locator, errorMessage, 1);
+                needMoreAttempts = false;
+            } catch (Exception e) {
+                if (currentAttempts > amountOfAttempts) {
+                    this.waitForElementAndClick(locator, errorMessage, 1);
+                }
+            }
+            ++currentAttempts;
+        }
     }
 
     public void assertElementNotPresent(String locator, String errorMessage) {

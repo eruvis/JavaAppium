@@ -13,6 +13,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             OPTIONS_BUTTON,
             OPTIONS_LAST_ELEMENT,
             OPTIONS_ADD_TO_MY_lIST_BUTTON,
+            OPTIONS_REMOVE_FROM_MY_LIST_BUTTON,
             ADD_TO_MY_LIST_OVERLAY,
             MY_LIST_NAME_INPUT,
             MY_LIST_NAME_TPL,
@@ -60,7 +61,7 @@ abstract public class ArticlePageObject extends MainPageObject {
     public void swipeToFooter() {
         if (Platform.getInstance().isAndroid()) {
             this.swipeUpToFindElement(FOOTER_ELEMENT, "Cannot find the end of the article", 40);
-        } else if (Platform.getInstance().isIOS()){
+        } else if (Platform.getInstance().isIOS()) {
             this.swipeUpTitleElementAppear(FOOTER_ELEMENT, "Cannot find the end of the article", 40);
         } else {
             this.scrollWebPageTitleElementNotVisible(FOOTER_ELEMENT, "Cannot find the end of the article", 40);
@@ -145,6 +146,11 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
     public void closeArticle() {
+        if (Platform.getInstance().isMW()) {
+            System.out.println("Method closeArticle() do nothing for platform " +Platform.getInstance().getPlatformVar());
+            return;
+        }
+
         this.waitForElementAndClick(
                 CLOSE_ARTICLE_BUTTON,
                 "Cannot close article. Cannot find 'X' link",
@@ -156,7 +162,24 @@ abstract public class ArticlePageObject extends MainPageObject {
         this.assertElementPresent(TITLE, "Cannot find title");
     }
 
-    public void addArticlesToMySave() {
+    public void addArticlesToMySaved() {
+        /*if (Platform.getInstance().isMW()) {
+            removeArticleFromSavedIfItAdded();
+        }*/
         this.waitForElementAndClick(OPTIONS_ADD_TO_MY_lIST_BUTTON, "Cannot find options to add article to my list", 5);
+    }
+
+    public void removeArticleFromSavedIfItAdded() {
+        if (isElementPresent(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON)) {
+            this.waitForElementAndClick(
+                    OPTIONS_REMOVE_FROM_MY_LIST_BUTTON,
+                    "Cannot click button to remove and article from saved",
+                    1
+            );
+            this.waitForElementPresent(
+                    OPTIONS_ADD_TO_MY_lIST_BUTTON,
+                    "Cannot find button to add an article to saved list after removing it from this list before"
+            );
+        }
     }
 }

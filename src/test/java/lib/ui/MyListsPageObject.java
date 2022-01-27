@@ -7,7 +7,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 abstract public class MyListsPageObject extends MainPageObject {
     protected static String
             FOLDER_BY_NAME_TPL,
-            ARTICLE_BY_TITLE_TPL;
+            ARTICLE_BY_TITLE_TPL,
+            REMOVE_FROM_SAVED_BUTTON;
 
     public MyListsPageObject(RemoteWebDriver driver) {
         super(driver);
@@ -20,6 +21,10 @@ abstract public class MyListsPageObject extends MainPageObject {
 
     public static String getSavedArticleXpathByTitle(String articleTitle) {
         return ARTICLE_BY_TITLE_TPL.replace("{TITLE}", articleTitle);
+    }
+
+    public static String getRemoveButtonByTittle(String articleTitle) {
+        return REMOVE_FROM_SAVED_BUTTON.replace("{TITLE}", articleTitle);
     }
     /* TEMPlATES METHODS */
 
@@ -55,10 +60,27 @@ abstract public class MyListsPageObject extends MainPageObject {
         String articleXpath = getSavedArticleXpathByTitle(articleTitle);
 
         this.waitForArticleToAppearByTitle(articleTitle);
-        this.swipeElementToLeft(articleXpath, "Cannot find send article");
-        if (Platform.getInstance().isIOS()) {
-            this.clickElementToTheRightUpperCorner(articleXpath, "Cannot find save article");
+
+        if (Platform.getInstance().isMW()) {
+            String removeLocator = getRemoveButtonByTittle(articleTitle);
+            System.out.println(removeLocator);
+            this.waitForElementAndClick(
+                    removeLocator,
+                    "Cannot click button to remove article from saved.",
+                    10
+            );
+        } else {
+            this.swipeElementToLeft(articleXpath, "Cannot find send article");
+
+            if (Platform.getInstance().isIOS()) {
+                this.clickElementToTheRightUpperCorner(articleXpath, "Cannot find save article");
+            }
         }
+
+        if (Platform.getInstance().isMW()) {
+            driver.navigate().refresh();
+        }
+
         this.waitForArticleToDisappearByTitle(articleTitle);
     }
 }
