@@ -73,15 +73,15 @@ public class SearchTests extends CoreTestCase {
     public void testSearchElementByTitleAndDescription() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
-        String searchLine = "Kotlin";
+        String searchLine = "Valve";
         SearchPageObject.typeSearchLine(searchLine);
 
-        String firstTitle = "Kotlin",
-                firstDescription = "Wikimedia disambiguation page";
-        String secondTitle = "Kotlin (programming language)",
-                secondDescription = "Programming language";
-        String thirdTitle = "Kotlin-class destroyer",
-                thirdDescription = "Class of Soviet cold-war destroyers";
+        String firstTitle = "Valve",
+                firstDescription = "Flow control device";
+        String secondTitle = "Valve Corporation",
+                secondDescription = "American video game company";
+        String thirdTitle = "Valve amplifier",
+                thirdDescription = "Type of electronic amplifier";
 
         SearchPageObject.waitForElementByTitleAndDescription(firstTitle, firstDescription);
         SearchPageObject.waitForElementByTitleAndDescription(secondTitle, secondDescription);
