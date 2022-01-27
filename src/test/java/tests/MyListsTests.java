@@ -70,17 +70,35 @@ public class MyListsTests extends CoreTestCase {
         String firstSearchRequest = "Selenium";
         SearchPageObject.typeSearchLine(firstSearchRequest);
         String firstArticleTitle = "Selenium (software)";
-        SearchPageObject.clickByArticleWithSubstring(firstArticleTitle);
+        String firstArticleSubtitle = "Testing framework for web applications";
+        SearchPageObject.clickByArticleWithSubstring(firstArticleSubtitle);
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
 
         String nameOfFolder = "List for ex.5";
+
         if (Platform.getInstance().isAndroid()) {
             ArticlePageObject.addArticleToMyNewList(nameOfFolder);
         } else {
             ArticlePageObject.addArticlesToMySaved();
         }
+
+        if (Platform.getInstance().isMW()) {
+            AuthorizationPageObject auth = new AuthorizationPageObject(driver);
+            auth.clickAuthButton();
+            auth.enterLoginData(login, password);
+            auth.submitForm();
+
+            ArticlePageObject.waitForTitleElement();
+
+            assertEquals(
+                    "We are not on the same page after login.",
+                    firstArticleTitle,
+                    ArticlePageObject.getArticleTitle()
+            );
+        }
+
         ArticlePageObject.closeArticle();
 
         SearchPageObject.initSearchInput();
@@ -88,7 +106,7 @@ public class MyListsTests extends CoreTestCase {
         SearchPageObject.typeSearchLine(secondSearchRequest);
         String secondArticleTitle = "Java (programming language)";
         String secondArticleSubtitle = "Object-oriented programming language";
-        SearchPageObject.clickByArticleWithSubstring(secondArticleTitle);
+        SearchPageObject.clickByArticleWithSubstring(secondArticleSubtitle);
 
         ArticlePageObject.waitForTitleElement();
 
@@ -100,6 +118,7 @@ public class MyListsTests extends CoreTestCase {
         ArticlePageObject.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+        NavigationUI.openNavigation();
         NavigationUI.clickMyLists();
 
         MyListsPageObject MyListPageObject = MyListsPageObjectFactory.get(driver);
@@ -113,10 +132,14 @@ public class MyListsTests extends CoreTestCase {
 
         String articleSubtitle = ArticlePageObject.getArticleSubtitle();
 
-        assertEquals(
-                "We see unexpected title!",
-                secondArticleSubtitle,
-                articleSubtitle
-        );
+        if (Platform.getInstance().isMW()) {
+            assertTrue(articleSubtitle.contains(secondArticleSubtitle.toLowerCase()));
+        } else {
+            assertEquals(
+                    "We see unexpected subtitle!",
+                    secondArticleSubtitle,
+                    articleSubtitle
+            );
+        }
     }
 }

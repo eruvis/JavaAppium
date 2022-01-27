@@ -53,8 +53,10 @@ abstract public class ArticlePageObject extends MainPageObject {
         WebElement descriptionElement = waitForSubtitleElement();
         if (Platform.getInstance().isAndroid()) {
             return descriptionElement.getAttribute("text");
-        } else {
+        } else if (Platform.getInstance().isIOS()) {
             return descriptionElement.getAttribute("name");
+        } else {
+            return descriptionElement.getText();
         }
     }
 
@@ -166,7 +168,9 @@ abstract public class ArticlePageObject extends MainPageObject {
         /*if (Platform.getInstance().isMW()) {
             removeArticleFromSavedIfItAdded();
         }*/
-        this.waitForElementAndClick(OPTIONS_ADD_TO_MY_lIST_BUTTON, "Cannot find options to add article to my list", 5);
+        if (!isElementPresent(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON)) {
+            this.waitForElementAndClick(OPTIONS_ADD_TO_MY_lIST_BUTTON, "Cannot find options to add article to my list", 5);
+        }
     }
 
     public void removeArticleFromSavedIfItAdded() {

@@ -63,7 +63,6 @@ abstract public class MyListsPageObject extends MainPageObject {
 
         if (Platform.getInstance().isMW()) {
             String removeLocator = getRemoveButtonByTittle(articleTitle);
-            System.out.println(removeLocator);
             this.waitForElementAndClick(
                     removeLocator,
                     "Cannot click button to remove article from saved.",
