@@ -80,19 +80,19 @@ public class Platform {
     }
 
     private ChromeOptions getMWChromeOptions() {
-        Map<String, Object> deviceMetrics = new HashMap<String, Object>();
+        /*Map<String, Object> deviceMetrics = new HashMap<String, Object>();
         deviceMetrics.put("width", 360);
         deviceMetrics.put("height", 640);
-        deviceMetrics.put("pixelRatio", 3.0);
+        deviceMetrics.put("pixelRatio", 3.0);*/
 
-        Map<String, Object> mobileEmulation = new HashMap<String, Object>();
+        Map<String, Object> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("deviceName", "iPhone SE");
         /*mobileEmulation.put("deviceMetrics", deviceMetrics);
         mobileEmulation.put("userAgent", "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19");*/
-        mobileEmulation.put("deviceName", "iPhone SE");
 
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
-        chromeOptions.addArguments("window-size=360,640");
+        chromeOptions.addArguments("window-size=320,640");
 
         return chromeOptions;
     }
