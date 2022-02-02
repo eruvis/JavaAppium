@@ -52,7 +52,7 @@ abstract public class SearchPageObject extends MainPageObject {
         this.waitForElementAndClick(SEARCH_CANCEL_BUTTON, "Cannot find and click search cancel button", 5);
     }
 
-    @Step("Typing text to the search line")
+    @Step("Typing '{searchLine}' to the search line")
     public void typeSearchLine(String searchLine) {
         this.waitForElementAndSendKeys(
                 SEARCH_INPUT, searchLine, "Cannot find and type into search input", 5);
