@@ -7,6 +7,7 @@ import lib.ui.factories.ArticlePageObjectFactory;
 import lib.ui.factories.MyListsPageObjectFactory;
 import lib.ui.factories.NavigationUIFactory;
 import lib.ui.factories.SearchPageObjectFactory;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class MyListsTests extends CoreTestCase {
@@ -39,7 +40,7 @@ public class MyListsTests extends CoreTestCase {
 
             ArticlePageObject.waitForTitleElement();
 
-            assertEquals(
+            Assert.assertEquals(
                     "We are not on the same page after login.",
                     articleTitle,
                     ArticlePageObject.getArticleTitle()
@@ -92,7 +93,7 @@ public class MyListsTests extends CoreTestCase {
 
             ArticlePageObject.waitForTitleElement();
 
-            assertEquals(
+            Assert.assertEquals(
                     "We are not on the same page after login.",
                     firstArticleTitle,
                     ArticlePageObject.getArticleTitle()
@@ -133,9 +134,9 @@ public class MyListsTests extends CoreTestCase {
         String articleSubtitle = ArticlePageObject.getArticleSubtitle();
 
         if (Platform.getInstance().isMW()) {
-            assertTrue(articleSubtitle.contains(secondArticleSubtitle.toLowerCase()));
+            Assert.assertTrue(articleSubtitle.contains(secondArticleSubtitle.toLowerCase()));
         } else {
-            assertEquals(
+            Assert.assertEquals(
                     "We see unexpected subtitle!",
                     secondArticleSubtitle,
                     articleSubtitle
