@@ -70,6 +70,7 @@ abstract public class SearchPageObject extends MainPageObject {
         this.waitForElementAndClick(searchResultXpath, "Cannot find and click search result with substring" + substring, 10);
     }
 
+    @Step("Waiting for search result an article by title and description in article")
     public void waitForElementByTitleAndDescription(String title, String description) {
         String searchResultXpath = getResultSearchElementByTitleAndDescription(title, description);
         this.waitForElementPresent(
@@ -101,6 +102,7 @@ abstract public class SearchPageObject extends MainPageObject {
         this.waitForElementNotPresent(SEARCH_RESULT_ELEMENT, "We supposed not to find any result!", 5);
     }
 
+    @Step("Making sure the search page is closed")
     public void assertTherePageOfSearchIsClose() {
         this.waitForElementNotPresent(SEARCH_RESULT_FRAGMENT, "Search results are not missing", 5);
     }

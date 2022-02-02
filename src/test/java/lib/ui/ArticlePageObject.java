@@ -49,10 +49,12 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Waiting for subtitle on the article page")
     public WebElement waitForSubtitleElement() {
         return this.waitForElementPresent(SUBTITLE, "Cannot find subtitle title on page!", 15);
     }
 
+    @Step("Get article subtitle")
     public String getArticleSubtitle() {
         WebElement descriptionElement = waitForSubtitleElement();
         if (Platform.getInstance().isAndroid()) {
@@ -123,6 +125,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    @Step("Adding the article to my existing list")
     public void addArticleToMyExistingList(String nameOfFolder) {
         this.waitForElementAndClick(
                 OPTIONS_BUTTON,
@@ -167,6 +170,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    @Step("Checking for the presence of a title element")
     public void assertTitleElementPresent() {
         this.assertElementPresent(TITLE, "Cannot find title");
     }

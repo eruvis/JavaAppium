@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.*;
@@ -10,11 +12,17 @@ import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Epic("Test for my lists")
 public class MyListsTests extends CoreTestCase {
     private static final String login = "jafino6682";
     private static final String password = "jafino6682@bubblybank.com";
 
     @Test
+    @Features(value = {@Feature(value = "Search"), @Feature(value = "Article"), @Feature(value = "List"), @Feature(value = "Auth"), @Feature(value = "Navigation")})
+    @DisplayName("Save article to my list")
+    @Description("We search for an article and add it to my list. Then open the list and delete it")
+    @Step("Starting test testSaveFirstArticleToMyList")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testSaveFirstArticleToMyList() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -65,6 +73,11 @@ public class MyListsTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search"), @Feature(value = "Article"), @Feature(value = "List"), @Feature(value = "Auth"), @Feature(value = "Navigation")})
+    @DisplayName("Save two article to my list")
+    @Description("We search for two articles and add them to my list. After we open my list and delete one of them")
+    @Step("Starting test testSaveTwoArticlesToMyList")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testSaveTwoArticlesToMyList() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();

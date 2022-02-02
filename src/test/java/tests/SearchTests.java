@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.SearchPageObject;
@@ -7,8 +9,14 @@ import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Epic("Test for search")
 public class SearchTests extends CoreTestCase {
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Search")
+    @Description("We are looking for articles by search query")
+    @Step("Starting test testSearch")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testSearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -18,6 +26,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Waiting for the search result and cancel it")
+    @Description("Checking if the search is canceled when the cancel button is clicked")
+    @Step("Starting test testCancelSearching")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testCancelSearching() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -31,6 +44,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Cancel search")
+    @Description("Checking if the cancel search button disappears after clicking it")
+    @Step("Starting test testCancelSearch")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testCancelSearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -45,6 +63,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Amount of not empty search")
+    @Description("We check the number of requests that are not empty, and then we check that they are not 0")
+    @Step("Starting test testAmountOfNotEmptySearch")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testAmountOfNotEmptySearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -60,6 +83,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Amount of empty search")
+    @Description("We check that there are no search queries")
+    @Step("Starting test testAmountOfEmptySearch")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testAmountOfEmptySearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -71,6 +99,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Check search element")
+    @Description("We check the title and description of the articles in search")
+    @Step("Starting test testSearchElementByTitleAndDescription")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testSearchElementByTitleAndDescription() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();

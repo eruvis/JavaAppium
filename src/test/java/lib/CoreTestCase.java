@@ -80,6 +80,7 @@ public class CoreTestCase{
         }
     }
 
+    @Step("Create Allure Property File")
     private void createAllurePropertyFile() {
         String path = System.getProperty("allure.results.directory");
         try {

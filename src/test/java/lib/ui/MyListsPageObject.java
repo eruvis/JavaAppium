@@ -1,6 +1,7 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -28,6 +29,7 @@ abstract public class MyListsPageObject extends MainPageObject {
     }
     /* TEMPlATES METHODS */
 
+    @Step("Open folder by name")
     public void openFolderByName(String nameOfFolder) {
         String folderNameXpath = getFolderXpathByName(nameOfFolder);
 
@@ -38,24 +40,28 @@ abstract public class MyListsPageObject extends MainPageObject {
         );
     }
 
+    @Step("Open article by name in folder")
     public void openArticleByName(String articleTitle) {
         String articleXpath = getSavedArticleXpathByTitle(articleTitle);
 
         this.waitForElementAndClick(articleXpath, "Cannot find saved article by title " + articleTitle, 5);
     }
 
+    @Step("Waiting for article to appear by title")
     public void waitForArticleToAppearByTitle(String articleTitle) {
         String articleXpath = getSavedArticleXpathByTitle(articleTitle);
 
         this.waitForElementPresent(articleXpath, "Cannot find saved article by title " + articleTitle, 15);
     }
 
+    @Step("Waiting for article to disappear by title")
     public void waitForArticleToDisappearByTitle(String articleTitle) {
         String articleXpath = getSavedArticleXpathByTitle(articleTitle);
 
         this.waitForElementNotPresent(articleXpath, "Saved article still present with title " + articleTitle, 15);
     }
 
+    @Step("Swiping by article to delete")
     public void swipeByArticleToDelete(String articleTitle) {
         String articleXpath = getSavedArticleXpathByTitle(articleTitle);
 

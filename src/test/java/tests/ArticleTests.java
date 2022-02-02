@@ -54,6 +54,11 @@ public class ArticleTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search"), @Feature(value = "Article")})
+    @DisplayName("Check article title element")
+    @Description("We open an article and check for availability title element through assert")
+    @Step("Starting test testAvailabilityOfTitle")
+    @Severity(value = SeverityLevel.MINOR)
     public void testAvailabilityOfTitle() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
